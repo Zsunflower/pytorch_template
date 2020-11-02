@@ -61,7 +61,8 @@ class Trainer(object):
             if val_loss < min_loss:
                 min_loss = val_loss
                 torch.save(self.model.state_dict(),
-                    os.path.join(self.args.checkpoint, "{}_{}_{}.pth".format(self.args.name, epoch, val_loss)))
+                    os.path.join(self.args.checkpoint,
+                                 "{}_{}_{}.pth".format(self.args.name, epoch, val_loss)))
 
 
 def main(args):

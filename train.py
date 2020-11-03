@@ -18,8 +18,8 @@ class Trainer(object):
         val_ds   =
         test_ds  =
         self.train_loader = torch.utils.data.DataLoader(train_ds, batch_size=self.args.batch_size, shuffle=True)
-        self.val_loader   = torch.utils.data.DataLoader(val_ds,     batch_size=self.args.batch_size, shuffle=False)
-        self.test_loader  = torch.utils.data.DataLoader(test_ds,   batch_size=self.args.batch_size, shuffle=False)
+        self.val_loader   = torch.utils.data.DataLoader(val_ds,   batch_size=self.args.batch_size, shuffle=False)
+        self.test_loader  = torch.utils.data.DataLoader(test_ds,  batch_size=self.args.batch_size, shuffle=False)
 
     def setup_train(self):
         self.model =

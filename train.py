@@ -24,8 +24,10 @@ class Trainer(object):
     def setup_train(self):
         self.model =
         self.optimizer = torch.optim.SGD(
-            self.model.parameters(), lr=self.args.lr).to(self.device)
+            self.model.parameters(), lr=self.args.lr)
         self.criterion = nn.CrossEntropyLoss().to(self.device)
+        if not os.path.isdir(self.args.ckpt):
+            os.mkdir(self.args.ckpt)
 
     def train_one_epoch(self):
         train_loss = 0.0
@@ -61,7 +63,7 @@ class Trainer(object):
             if val_loss < min_loss:
                 min_loss = val_loss
                 torch.save(self.model.state_dict(),
-                    os.path.join(self.args.checkpoint,
+                    os.path.join(self.args.ckpt,
                                  "{}_{}_{}.pth".format(self.args.name, epoch, val_loss)))
 
 
@@ -73,10 +75,11 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Pytorch training script')
     parser.add_argument('--name', default=None, type=str,help='Name script')
-    parser.add_argument('--checkpoint', default=None, type=str,
+    parser.add_argument('--ckpt', default=None, type=str,
                         help='Checkpoint directory')
     parser.add_argument('--lr', default=0.001, type=float,
                         help='Learning rate')
+    parser.add_argument("--batch_size", default=32, type=int, help="Batch size")
     parser.add_argument('--epochs', default=80, type=int,
                         help='Number of epochs to train')
     args = parser.parse_args()
